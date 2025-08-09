@@ -1,6 +1,6 @@
 export default function Home() {
   const handleLogin = () => {
-    window.location.href = "http://localhost:5000/auth/google";
+    window.location.href = "https://google-oauth-tiok.onrender.com/auth/google";
   };
 
   return (
