@@ -19,25 +19,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function AuthSuccess() {
+export default function AuthSuccess({ setToken }) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = params.get("token");
-    console.log("got the token")
     if (token) {
       localStorage.setItem("token", token);
+      setToken(token); // update app state immediately
       setLoading(false);
-      console.log("triggering to next page")
-      navigate("/profile");
+      navigate("/profile", { replace: true });
     } else {
-      // Token not yet available, keep showing Loading or handle missing token scenario
       setLoading(true);
     }
-  }, [params, navigate]);
+  }, [params, navigate, setToken]);
 
   return <p>{loading ? "Loading..." : null}</p>;
 }
+
 
