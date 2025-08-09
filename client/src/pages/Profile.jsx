@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 export default function Profile() {
   console.log("arrived to profile page")
