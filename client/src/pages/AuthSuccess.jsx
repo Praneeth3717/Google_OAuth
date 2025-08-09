@@ -19,30 +19,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function AuthSuccess({ setToken }) {
+export default function AuthSuccess() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(false); // track if we checked token
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = params.get("token");
 
     if (token) {
       localStorage.setItem("token", token);
-      setToken(token);
+      setLoading(false);
       navigate("/profile", { replace: true });
-    } else if (token === null) {
-      // token param is missing (not yet available or truly absent)
-      // Only redirect to "/" if we know no token param present
-      navigate("/", { replace: true });
+    } else {
+      // Token not yet available, keep showing Loading or handle missing token scenario
+      setLoading(true);
     }
+  }, [params, navigate]);
 
-    setChecked(true); // mark that we handled token check
-  }, [navigate, params, setToken]);
-
-  // Optionally, show a loading state until token param processed
-  if (!checked) return <p>Checking login...</p>;
-
-  return null; // or a spinner, since we redirect anyway
+  return <p>{loading ? "Loading..." : null}</p>;
 }
 
