@@ -26,11 +26,12 @@ export default function AuthSuccess() {
 
   useEffect(() => {
     const token = params.get("token");
-
+    console.log("got the token")
     if (token) {
       localStorage.setItem("token", token);
       setLoading(false);
-      navigate("/profile", { replace: true });
+      console.log("triggering to next page")
+      navigate("/profile");
     } else {
       // Token not yet available, keep showing Loading or handle missing token scenario
       setLoading(true);
